@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BankAppTest</string>
+    <string name="main_page_title">Главная</string>
+    <string name="balance_text">Your balance</string>
+    <string name="date_text">VALID THRU</string>
+    <string name="change_currency">Change currency</string>
+    <string name="history">History</string>
+</resources>
