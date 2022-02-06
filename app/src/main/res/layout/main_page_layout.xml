@@ -62,7 +62,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:src="@drawable/mastercard_icon"
-                            android:contentDescription="logo"
                             android:layout_marginEnd="18dp" />
 
                         <TextView
@@ -85,13 +84,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="14dp"
-                            android:contentDescription="logo"
                             android:src="@drawable/default_user_icon" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Anton Ivanov"
+                            android:text="@{viewmodel.card.userName}"
                             android:textColor="#8C9AAE"
                             android:textSize="17sp" />
 
@@ -116,7 +114,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="12/22"
+                                android:text="@{viewmodel.card.date}"
                                 android:textColor="#8C9AAE"
                                 android:textSize="17sp" />
                         </LinearLayout>
@@ -131,7 +129,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="£2 125,12"
+                            android:text="@{viewmodel.card.convertedBalance}"
                             android:textColor="#141414"
                             android:textSize="28sp" />
 
@@ -156,7 +154,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="$2 617.14"
+                                android:text="@{viewmodel.card.balance}"
                                 android:textColor="#141414"
                                 android:textSize="18sp" />
                         </LinearLayout>
@@ -179,6 +177,7 @@
                     android:padding="0dp">
 
                     <LinearLayout
+                        android:id="@+id/gbp_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -190,14 +189,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="£"
+                            android:text="@string/gbp_symbol"
                             android:textSize="30sp"
                             android:textColor="#8C9AAE" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="GBP"
+                            android:text="@string/gbp"
                             android:textSize="16sp"
                             android:textColor="#8C9AAE" />
                     </LinearLayout>
@@ -208,6 +207,7 @@
                         android:layout_weight="1" />
 
                     <LinearLayout
+                        android:id="@+id/eur_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -219,14 +219,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="€"
+                            android:text="@string/eur_symbol"
                             android:textSize="30sp"
                             android:textColor="#8C9AAE" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="EUR"
+                            android:text="@string/eur"
                             android:textSize="16sp"
                             android:textColor="#8C9AAE" />
                     </LinearLayout>
@@ -237,6 +237,7 @@
                         android:layout_weight="1" />
 
                     <LinearLayout
+                        android:id="@+id/rub_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -249,14 +250,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="₽"
+                            android:text="@string/rub_symbol"
                             android:textSize="30sp"
                             android:textColor="#8C9AAE" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="RUB"
+                            android:text="@string/rub"
                             android:textSize="16sp"
                             android:textColor="#8C9AAE" />
                     </LinearLayout>

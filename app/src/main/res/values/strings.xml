@@ -6,4 +6,10 @@
     <string name="change_currency">Change currency</string>
     <string name="history">History</string>
     <string name="my_cards">Мои карты</string>
+    <string name="gbp_symbol">£</string>
+    <string name="gbp">GBP</string>
+    <string name="eur_symbol">€</string>
+    <string name="eur">EUR</string>
+    <string name="rub_symbol">₽</string>
+    <string name="rub">RUB</string>
 </resources>

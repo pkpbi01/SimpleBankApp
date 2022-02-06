@@ -1,10 +1,12 @@
 package com.tuocwizards.bankapptest.app.viewModel
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tuocwizards.bankapptest.app.models.CardModel
 import com.tuocwizards.bankapptest.app.models.HistoryItemModel
+import com.tuocwizards.bankapptest.bll.CurrencyConverter
 import com.tuocwizards.bankapptest.bll.DataInteractor
 import com.tuocwizards.bankapptest.dal.models.CurrenciesModel
 import com.tuocwizards.bankapptest.dal.models.Users
@@ -12,24 +14,31 @@ import kotlinx.coroutines.launch
 
 class MainPageViewModel(private val dataInteractor: DataInteractor): ViewModel() {
 
-    var card: CardModel = CardModel(cardNumber = "666", balance = "", convertedBalance = "", date = "", iconSrc = "", userName = "")
-    //var card = MutableLiveData<CardModel>(CardModel(cardNumber = "", balance = "", convertedBalance = "", date = "", iconSrc = "", userName = ""))
-    fun loadUsers() {
+    val currencyConverter = CurrencyConverter()
+    var card: CardModel = CardModel()
+    lateinit var currencies: CurrenciesModel
+    lateinit var users: Users
+
+    init {
         viewModelScope.launch {
-            val users = dataInteractor.getUsersData()
-            //val currencies = dataInteractor.getCurrencyData()
-            fillCardByDefault(users)
+            users = dataInteractor.getUsersData()
+            currencies = dataInteractor.getCurrencyData()
+            fillCardByDefault()
         }
     }
 
-    private fun fillCardByDefault(users: Users) {
-        card.balance = users.users[0].balance.toString()
-        card.cardNumber = users.users[0].card_number
-        card.convertedBalance = users.users[0].balance.toString() //FIx
-        card.userName = users.users[0].cardholder_name
-        card.date = users.users[0].valid
+
+
+
+    private fun fillCardByDefault() {
+        val convertedBalance = currencyConverter.convertCurrency(users.users[1].balance, "GBP", currencies)
+        card.balance.set(users.users[1].balance.toString())
+        card.cardNumber.set(users.users[1].card_number)
+        card.convertedBalance.set(convertedBalance.toString())
+        card.userName.set(users.users[1].cardholder_name)
+        card.date.set(users.users[1].valid)
 //        when (users.users[0].type) {
-//            "mastercard" -> card.iconSrc =
+//            "mastercard" -> card.iconSrc.set("@drawable/mastercard_icon")
 //        }
     }
 }
