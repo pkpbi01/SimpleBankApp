@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".app.pages.MainPage">
+        tools:context=".app.pages.MainPage"
+        android:id="@+id/main_page">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,6 +45,7 @@
                 android:paddingVertical="24dp">
 
                 <LinearLayout
+                    android:id="@+id/card_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -109,7 +111,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/date_text"
                                 android:textColor="#8C9AAE"
-                                android:textSize="8sp" />
+                                android:textSize="9sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -131,6 +133,7 @@
                             android:layout_height="wrap_content"
                             android:text="@{viewmodel.card.convertedBalance}"
                             android:textColor="#141414"
+                            android:textStyle="bold"
                             android:textSize="28sp" />
 
                         <View
@@ -155,6 +158,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{viewmodel.card.balance}"
+                                android:textStyle="bold"
                                 android:textColor="#141414"
                                 android:textSize="18sp" />
                         </LinearLayout>
@@ -184,21 +188,23 @@
                         android:gravity="center"
                         android:paddingHorizontal="40dp"
                         android:paddingVertical="22dp"
-                        android:background="@drawable/shape">
+                        android:background="@drawable/blue_shape">
 
                         <TextView
+                            android:id="@+id/gbp_symbol"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/gbp_symbol"
                             android:textSize="30sp"
-                            android:textColor="#8C9AAE" />
+                            android:textColor="#FFFFFF" />
 
                         <TextView
+                            android:id="@+id/gbp_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/gbp"
                             android:textSize="16sp"
-                            android:textColor="#8C9AAE" />
+                            android:textColor="#FFFFFF" />
                     </LinearLayout>
 
                     <View
@@ -217,6 +223,7 @@
                         android:background="@drawable/shape">
 
                         <TextView
+                            android:id="@+id/eur_symbol"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/eur_symbol"
@@ -224,6 +231,7 @@
                             android:textColor="#8C9AAE" />
 
                         <TextView
+                            android:id="@+id/eur_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/eur"
@@ -248,6 +256,7 @@
                         android:background="@drawable/shape">
 
                         <TextView
+                            android:id="@+id/rub_symbol"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/rub_symbol"
@@ -255,6 +264,7 @@
                             android:textColor="#8C9AAE" />
 
                         <TextView
+                            android:id="@+id/rub_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/rub"

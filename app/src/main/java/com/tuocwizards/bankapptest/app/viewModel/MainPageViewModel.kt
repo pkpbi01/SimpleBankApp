@@ -18,27 +18,43 @@ class MainPageViewModel(private val dataInteractor: DataInteractor): ViewModel()
     var card: CardModel = CardModel()
     lateinit var currencies: CurrenciesModel
     lateinit var users: Users
+    var cardId: Int = 0
 
     init {
         viewModelScope.launch {
             users = dataInteractor.getUsersData()
             currencies = dataInteractor.getCurrencyData()
-            fillCardByDefault()
+            fillCard("GBP")
         }
     }
 
-
-
-
-    private fun fillCardByDefault() {
-        val convertedBalance = currencyConverter.convertCurrency(users.users[1].balance, "GBP", currencies)
-        card.balance.set(users.users[1].balance.toString())
-        card.cardNumber.set(users.users[1].card_number)
-        card.convertedBalance.set(convertedBalance.toString())
-        card.userName.set(users.users[1].cardholder_name)
-        card.date.set(users.users[1].valid)
+    private fun fillCard(currencyName: String) {
+        val currencySymbol = findCurrencySymbol(currencyName)
+        val balance = currencyConverter.roundAmount(users.users[cardId].balance)
+        val convertedBalance = currencyConverter.convertCurrency(balance, currencyName, currencies)
+        card.balance.set("$$balance")
+        card.cardNumber.set(users.users[cardId].card_number)
+        card.convertedBalance.set("$currencySymbol$convertedBalance")
+        card.userName.set(users.users[cardId].cardholder_name)
+        card.date.set(users.users[cardId].valid)
 //        when (users.users[0].type) {
 //            "mastercard" -> card.iconSrc.set("@drawable/mastercard_icon")
 //        }
+    }
+
+    fun ChangeCurrency(currencyName: String) {
+        val currencySymbol = findCurrencySymbol(currencyName)
+        val balance = currencyConverter.roundAmount(users.users[cardId].balance)
+        val convertedBalance = currencyConverter.convertCurrency(balance, currencyName, currencies)
+        card.convertedBalance.set("$currencySymbol$convertedBalance")
+    }
+
+    private fun findCurrencySymbol(currencyName: String): String {
+        return when (currencyName) {
+            "EUR" -> "€"
+            "GBP" -> "£"
+            "RUB" -> "₽"
+            else -> throw IllegalArgumentException()
+        }
     }
 }

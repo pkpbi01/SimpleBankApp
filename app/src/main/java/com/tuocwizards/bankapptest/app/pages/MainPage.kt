@@ -1,12 +1,14 @@
 package com.tuocwizards.bankapptest.app.pages
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
 import androidx.viewbinding.ViewBindings
 import com.tuocwizards.bankapptest.R
 import com.tuocwizards.bankapptest.app.factories.MainPageViewModelFactory
@@ -17,8 +19,20 @@ import com.tuocwizards.bankapptest.databinding.MainPageLayoutBinding
 class MainPage : Fragment() {
 
     private lateinit var viewModel: MainPageViewModel
+
     private var _binding: MainPageLayoutBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var gbpLayout: ViewGroup
+    private lateinit var eurLayout: ViewGroup
+    private lateinit var rubLayout: ViewGroup
+
+    private lateinit var gbpSymbol: TextView
+    private lateinit var gbpText: TextView
+    private lateinit var eurSymbol: TextView
+    private lateinit var eurText: TextView
+    private lateinit var rubSymbol: TextView
+    private lateinit var rubText: TextView
 
 
 
@@ -26,8 +40,8 @@ class MainPage : Fragment() {
         super.onCreate(savedInstanceState)
 
         val dataInteractor = DataInteractor()
-        val viewModelFactore = MainPageViewModelFactory(dataInteractor)
-        viewModel = ViewModelProvider(this, viewModelFactore).get(MainPageViewModel::class.java)
+        val viewModelFactory = MainPageViewModelFactory(dataInteractor)
+        viewModel = ViewModelProvider(this, viewModelFactory)[MainPageViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -38,20 +52,74 @@ class MainPage : Fragment() {
         _binding = MainPageLayoutBinding.inflate(inflater, container, false)
         _binding!!.viewmodel = viewModel
 
-        val gbpLayout = ViewBindings.findChildViewById<ViewGroup>(binding.root, R.id.gbp_layout)
-        val eurLayout = ViewBindings.findChildViewById<ViewGroup>(binding.root, R.id.eur_layout)
-        val rubLayout = ViewBindings.findChildViewById<ViewGroup>(binding.root, R.id.rub_layout)
+        gbpLayout = ViewBindings.findChildViewById(binding.root, R.id.gbp_layout)!!
+        eurLayout = ViewBindings.findChildViewById(binding.root, R.id.eur_layout)!!
+        rubLayout = ViewBindings.findChildViewById(binding.root, R.id.rub_layout)!!
 
-        gbpLayout!!.setOnClickListener { onValuteClicked(gbpLayout, eurLayout!!, rubLayout!!) }
-        eurLayout!!.setOnClickListener { onValuteClicked(eurLayout, gbpLayout, rubLayout!!) }
-        rubLayout!!.setOnClickListener { onValuteClicked(rubLayout, eurLayout, gbpLayout) }
+        gbpLayout.setOnClickListener { onGBPCurrencyClicked(binding.root) }
+        eurLayout.setOnClickListener { onEURCurrencyClicked(binding.root) }
+        rubLayout.setOnClickListener { onRUBCurrencyClicked(binding.root) }
+
+
+        gbpSymbol = ViewBindings.findChildViewById<TextView>(binding.root, R.id.gbp_symbol)!!
+        gbpText = ViewBindings.findChildViewById<TextView>(binding.root, R.id.gbp_text)!!
+        eurSymbol = ViewBindings.findChildViewById<TextView>(binding.root, R.id.eur_symbol)!!
+        eurText = ViewBindings.findChildViewById<TextView>(binding.root, R.id.eur_text)!!
+        rubSymbol = ViewBindings.findChildViewById<TextView>(binding.root, R.id.rub_symbol)!!
+        rubText = ViewBindings.findChildViewById<TextView>(binding.root, R.id.rub_text)!!
+
+        val cardLayout = ViewBindings.findChildViewById<ViewGroup>(binding.root, R.id.card_layout)
+        cardLayout!!.setOnClickListener { goToSelectCardPage() }
+
+
         return binding.root
     }
 
-    fun onValuteClicked(mainView: ViewGroup, difView1: ViewGroup, defView2: ViewGroup){
-        mainView.background = resources.getDrawable(R.drawable.blue_shape, requireContext().theme)
-        difView1.background = resources.getDrawable(R.drawable.shape, requireContext().theme)
-        defView2.background = resources.getDrawable(R.drawable.shape, requireContext().theme)
+    private fun onGBPCurrencyClicked(view: View){
+        gbpLayout.background = resources.getDrawable(R.drawable.blue_shape, requireContext().theme)
+        eurLayout.background = resources.getDrawable(R.drawable.shape, requireContext().theme)
+        rubLayout.background = resources.getDrawable(R.drawable.shape, requireContext().theme)
+        gbpSymbol.setTextColor(Color.parseColor("#FFFFFF"))
+        gbpText.setTextColor(Color.parseColor("#FFFFFF"))
+        eurSymbol.setTextColor(Color.parseColor("#8C9AAE"))
+        eurText.setTextColor(Color.parseColor("#8C9AAE"))
+        rubSymbol.setTextColor(Color.parseColor("#8C9AAE"))
+        rubText.setTextColor(Color.parseColor("#8C9AAE"))
+        viewModel.ChangeCurrency(gbpText.text.toString())
+    }
+
+    private fun onEURCurrencyClicked(view: View){
+        eurLayout.background = resources.getDrawable(R.drawable.blue_shape, requireContext().theme)
+        gbpLayout.background = resources.getDrawable(R.drawable.shape, requireContext().theme)
+        rubLayout.background = resources.getDrawable(R.drawable.shape, requireContext().theme)
+        gbpSymbol.setTextColor(Color.parseColor("#8C9AAE"))
+        gbpText.setTextColor(Color.parseColor("#8C9AAE"))
+        eurSymbol.setTextColor(Color.parseColor("#FFFFFF"))
+        eurText.setTextColor(Color.parseColor("#FFFFFF"))
+        rubSymbol.setTextColor(Color.parseColor("#8C9AAE"))
+        rubText.setTextColor(Color.parseColor("#8C9AAE"))
+        viewModel.ChangeCurrency(eurText.text.toString())
+    }
+
+    private fun onRUBCurrencyClicked(view: View){
+        rubLayout.background = resources.getDrawable(R.drawable.blue_shape, requireContext().theme)
+        gbpLayout.background = resources.getDrawable(R.drawable.shape, requireContext().theme)
+        eurLayout.background = resources.getDrawable(R.drawable.shape, requireContext().theme)
+        gbpSymbol.setTextColor(Color.parseColor("#8C9AAE"))
+        gbpText.setTextColor(Color.parseColor("#8C9AAE"))
+        eurSymbol.setTextColor(Color.parseColor("#8C9AAE"))
+        eurText.setTextColor(Color.parseColor("#8C9AAE"))
+        rubSymbol.setTextColor(Color.parseColor("#FFFFFF"))
+        rubText.setTextColor(Color.parseColor("#FFFFFF"))
+        viewModel.ChangeCurrency(rubText.text.toString())
+
+    }
+
+    private fun goToSelectCardPage() {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.empty_layout, SelectCardPage())
+        transaction.disallowAddToBackStack()
+        transaction.commit()
     }
 
 
