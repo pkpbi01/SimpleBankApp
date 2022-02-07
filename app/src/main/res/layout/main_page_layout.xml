@@ -61,12 +61,14 @@
                         android:layout_marginBottom="24dp">
 
                         <ImageView
+                            android:id="@+id/card_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:src="@drawable/mastercard_icon"
                             android:layout_marginEnd="18dp" />
 
                         <TextView
+                            android:id="@+id/card_number"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:text="@{viewmodel.card.cardNumber}"
@@ -89,6 +91,7 @@
                             android:src="@drawable/default_user_icon" />
 
                         <TextView
+                            android:id="@+id/user_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewmodel.card.userName}"
@@ -114,6 +117,7 @@
                                 android:textSize="9sp" />
 
                             <TextView
+                                android:id="@+id/date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{viewmodel.card.date}"
@@ -129,6 +133,7 @@
                         android:gravity="center_vertical">
 
                         <TextView
+                            android:id="@+id/converted_balance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewmodel.card.convertedBalance}"
@@ -155,6 +160,7 @@
                                 android:textSize="13sp" />
 
                             <TextView
+                                android:id="@+id/balance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{viewmodel.card.balance}"
