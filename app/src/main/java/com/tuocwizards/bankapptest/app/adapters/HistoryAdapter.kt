@@ -14,18 +14,19 @@ class HistoryAdapter: RecyclerView.Adapter<HistoryAdapter.HistoryHolder>() {
 
     class HistoryHolder(item: View): RecyclerView.ViewHolder(item) {
         private val binding = HistoryItemViewBinding.bind(item)
+
         fun bind(model: HistoryItemModel) = with(binding) {
-            icon.setImageResource(model.iconSrc)
+            //icon.setImageResource(model.iconSrc)
             title.text = model.title
             date.text = model.date
+            currencySymbol.text = model.currencySymbol
             convertedPrice.text = model.convertedPrice
             price.text = model.price
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.history_item_view, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.history_item_view, parent, false)
         return HistoryHolder(view)
     }
 
@@ -38,6 +39,7 @@ class HistoryAdapter: RecyclerView.Adapter<HistoryAdapter.HistoryHolder>() {
     }
 
     fun fillList(list: ArrayList<HistoryItemModel>) {
+        historyList.clear()
         historyList.addAll(list)
         notifyDataSetChanged()
     }

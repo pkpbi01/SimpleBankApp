@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="26dp"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/card_icon_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/mastercard_icon"
+        android:layout_marginRight="15dp"/>
+
+    <TextView
+        android:id="@+id/card_number_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="#141414"
+        android:textSize="16sp"
+        android:text="4455 1223 3488 1000"/>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:id="@+id/selected_card"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/blue_shape"
+        android:orientation="horizontal"/>
+
+
+</LinearLayout>

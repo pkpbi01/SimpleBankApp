@@ -1,8 +1,8 @@
 package com.tuocwizards.bankapptest.app.viewModel
 
-import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tuocwizards.bankapptest.app.adapters.HistoryAdapter
 import com.tuocwizards.bankapptest.app.models.CardModel
 import com.tuocwizards.bankapptest.app.models.HistoryItemModel
 import com.tuocwizards.bankapptest.bll.CurrencyConverter
@@ -13,57 +13,60 @@ import kotlinx.coroutines.launch
 
 class MainPageViewModel(private val dataInteractor: DataInteractor): ViewModel() {
 
-    private val currencyConverter = CurrencyConverter()
+    var cardId: Int = 0 //изменяеть при выборе карты
     var card: CardModel = CardModel()
     var history = ArrayList<HistoryItemModel>()
+    val historyAdapter = HistoryAdapter()
 
-
+    private val currencyConverter = CurrencyConverter()
     private lateinit var currencies: CurrenciesModel
     private lateinit var users: Users
     private val defaultCurrency = "GBP"
-    var cardId: Int = 0 //изменяеть при выборе карты
 
     init {
         viewModelScope.launch {
             users = dataInteractor.getUsersData()
             currencies = dataInteractor.getCurrencyData()
             fillCard()
-            fillHistory()
+            fillHistory(defaultCurrency)
         }
     }
 
-
-
     fun changeCurrency(currencyName: String) {
         val currencySymbol = findCurrencySymbol(currencyName)
-        val balance = currencyConverter.roundAmount(users.users[cardId].balance)
-        val convertedBalance = currencyConverter.convertCurrency(balance, currencyName, currencies)
+        val convertedBalance = currencyConverter.convertCurrency(users.users[cardId].balance, currencyName, currencies)
         card.convertedBalance.set("$currencySymbol$convertedBalance")
-        //добавить изменение на истории
+        fillHistory(currencyName)
     }
 
-    fun fillHistory() {
+    private fun fillHistory(currencyName: String) {
+        history.clear()
+        val currencySymbol = findCurrencySymbol(defaultCurrency)
         for (item in users.users[cardId].transaction_history) {
+            val price = item.amount.toFloat() * -1
             val convertedPrice = currencyConverter.convertCurrency(
-                item.amount.toFloat(),
-                defaultCurrency,
-                currencies).toString()
+                price,
+                currencyName,
+                currencies)
+
             val historyItem = HistoryItemModel(
-                iconSrc = 1,
+                iconSrc = 5,
                 title = item.title,
                 date = item.date,
-                price = item.amount,
+                price = "$ $price",
+                currencySymbol = "- $currencySymbol ",
                 convertedPrice = convertedPrice
             )
             history.add(historyItem)
         }
+        historyAdapter.fillList(history)
     }
 
     private fun fillCard() {
         val currencySymbol = findCurrencySymbol(defaultCurrency)
 
         val balance = currencyConverter.roundAmount(users.users[cardId].balance)
-        val convertedBalance = currencyConverter.convertCurrency(balance, defaultCurrency, currencies)
+        val convertedBalance = currencyConverter.convertCurrency(users.users[cardId].balance, defaultCurrency, currencies)
 
         card.balance.set("$$balance")
         card.cardNumber.set(users.users[cardId].card_number)

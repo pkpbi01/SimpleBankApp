@@ -7,20 +7,8 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 
 class CurrencyConverter {
-    private var dataInteractor: DataInteractor = DataInteractor()
-    private lateinit var currencies: CurrenciesModel
 
-    init {
-        fillCurrencies()
-    }
-
-    private fun fillCurrencies(){
-//        GlobalScope.launch {
-//            currencies = dataInteractor.getCurrencyData()
-//        }
-    }
-
-    fun convertCurrency(amount: Float, currency: String, currencies: CurrenciesModel): Float {
+    fun convertCurrency(amount: Float, currency: String, currencies: CurrenciesModel): String {
         val rubAmount = amount * currencies.Valute.USD.Value
         return when (currency) {
             "EUR" -> roundAmount(rubAmount / currencies.Valute.EUR.Value)
@@ -30,9 +18,10 @@ class CurrencyConverter {
         }
     }
 
-    fun roundAmount(amount: Float): Float {
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
-        return df.format(amount).toFloat()
+    fun roundAmount(amount: Float): String {
+//        val df = DecimalFormat("#.##")
+//        df.roundingMode = RoundingMode.HALF_EVEN
+
+        return amount.toBigDecimal().setScale(2, RoundingMode.HALF_EVEN).toString()
     }
 }

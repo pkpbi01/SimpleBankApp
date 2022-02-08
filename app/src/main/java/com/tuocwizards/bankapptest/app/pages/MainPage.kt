@@ -9,20 +9,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuocwizards.bankapptest.R
-import com.tuocwizards.bankapptest.app.adapters.HistoryAdapter
 import com.tuocwizards.bankapptest.app.factories.MainPageViewModelFactory
 import com.tuocwizards.bankapptest.app.viewModel.MainPageViewModel
 import com.tuocwizards.bankapptest.bll.DataInteractor
-import com.tuocwizards.bankapptest.databinding.MainPageLayoutBinding
-import okhttp3.internal.wait
-import kotlin.concurrent.thread
+import com.tuocwizards.bankapptest.databinding.MainPageBinding
 
 class MainPage : Fragment() {
 
     private lateinit var viewModel: MainPageViewModel
-    private val  historyAdapter = HistoryAdapter()
 
-    private var _binding: MainPageLayoutBinding? = null
+
+    private var _binding: MainPageBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +35,7 @@ class MainPage : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = MainPageLayoutBinding.inflate(inflater, container, false)
+        _binding = MainPageBinding.inflate(inflater, container, false)
         _binding!!.viewmodel = viewModel
 
         binding.apply {
@@ -48,16 +45,11 @@ class MainPage : Fragment() {
             cardLayout.setOnClickListener { goToSelectCardPage() }
 
             history.layoutManager = LinearLayoutManager(requireContext())
-            history.adapter = historyAdapter
-            fillHistory()
+            history.adapter = viewModel.historyAdapter
+
 
         }
         return binding.root
-    }
-
-    private fun fillHistory() {
-
-        historyAdapter.fillList(viewModel.history)
     }
 
     private fun onGBPCurrencyClicked(){
