@@ -7,15 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuocwizards.bankapptest.R
+import com.tuocwizards.bankapptest.app.adapters.HistoryAdapter
 import com.tuocwizards.bankapptest.app.factories.MainPageViewModelFactory
 import com.tuocwizards.bankapptest.app.viewModel.MainPageViewModel
 import com.tuocwizards.bankapptest.bll.DataInteractor
 import com.tuocwizards.bankapptest.databinding.MainPageLayoutBinding
+import okhttp3.internal.wait
+import kotlin.concurrent.thread
 
 class MainPage : Fragment() {
 
     private lateinit var viewModel: MainPageViewModel
+    private val  historyAdapter = HistoryAdapter()
 
     private var _binding: MainPageLayoutBinding? = null
     private val binding get() = _binding!!
@@ -35,14 +40,24 @@ class MainPage : Fragment() {
     ): View {
         _binding = MainPageLayoutBinding.inflate(inflater, container, false)
         _binding!!.viewmodel = viewModel
-        
+
         binding.apply {
             gbpLayout.setOnClickListener { onGBPCurrencyClicked() }
             eurLayout.setOnClickListener { onEURCurrencyClicked() }
             rubLayout.setOnClickListener { onRUBCurrencyClicked() }
             cardLayout.setOnClickListener { goToSelectCardPage() }
+
+            history.layoutManager = LinearLayoutManager(requireContext())
+            history.adapter = historyAdapter
+            fillHistory()
+
         }
         return binding.root
+    }
+
+    private fun fillHistory() {
+
+        historyAdapter.fillList(viewModel.history)
     }
 
     private fun onGBPCurrencyClicked(){

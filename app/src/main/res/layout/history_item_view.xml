@@ -16,6 +16,7 @@
 
         android:gravity="center">
         <ImageView
+            android:id="@+id/icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/netflix_icon"/>
@@ -26,12 +27,14 @@
         android:orientation="vertical"
         android:gravity="start">
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Netflix"
             android:textSize="16sp"
             android:textColor="#141414"/>
         <TextView
+            android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="15/12/2019"
@@ -48,12 +51,14 @@
         android:orientation="vertical"
         android:gravity="end">
         <TextView
+            android:id="@+id/converted_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="- £ 7.99"
             android:textSize="22sp"
             android:textColor="#141414"/>
         <TextView
+            android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="$ 9.85"
