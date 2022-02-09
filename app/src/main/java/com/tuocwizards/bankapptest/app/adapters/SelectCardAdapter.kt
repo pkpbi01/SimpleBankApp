@@ -12,17 +12,32 @@ class SelectCardAdapter: RecyclerView.Adapter<SelectCardAdapter.SelectCardHolder
 
     private val cardList = ArrayList<SelecteCardItemModel>()
 
-    class SelectCardHolder(item: View): RecyclerView.ViewHolder(item) {
+    private lateinit var clickListener: OnItemClickListener
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        clickListener = listener
+    }
+
+    class SelectCardHolder(item: View, listener: OnItemClickListener): RecyclerView.ViewHolder(item) {
         private val binding = SelectCardItemBinding.bind(item)
 
         fun bind(model: SelecteCardItemModel) = with(binding) {
             cardNumberItem.text = model.cardNumber
         }
+        init {
+            item.setOnClickListener {
+                listener.onItemClick(adapterPosition)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectCardHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.select_card_item, parent, false)
-        return SelectCardHolder(view)
+        return SelectCardHolder(view, clickListener)
     }
 
     override fun onBindViewHolder(holder: SelectCardHolder, position: Int) {

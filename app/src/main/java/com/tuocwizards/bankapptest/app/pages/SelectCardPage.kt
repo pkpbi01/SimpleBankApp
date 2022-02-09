@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuocwizards.bankapptest.R
+import com.tuocwizards.bankapptest.app.adapters.SelectCardAdapter
 import com.tuocwizards.bankapptest.app.factories.SelecdCardPageViewModelFactory
 import com.tuocwizards.bankapptest.app.viewModel.SelectCardPageViewModel
 import com.tuocwizards.bankapptest.bll.DataInteractor
-import com.tuocwizards.bankapptest.databinding.MainPageBinding
 import com.tuocwizards.bankapptest.databinding.SelectCardPageBinding
 
 class SelectCardPage : Fragment() {
@@ -31,21 +31,32 @@ class SelectCardPage : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = SelectCardPageBinding.inflate(inflater, container, false)
 
         binding.apply {
-            backButton.setOnClickListener { goToMainPage() }
+            backButton.setOnClickListener { goToMainPage(0) }
 
             cardList.layoutManager = LinearLayoutManager(requireContext())
             cardList.adapter = viewModel.selectCardAdapter
+            viewModel.selectCardAdapter.setOnItemClickListener(object : SelectCardAdapter.OnItemClickListener{
+                override fun onItemClick(position: Int) {
+                    goToMainPage(position)
+                }
+            })
         }
         return binding.root
     }
 
-    fun goToMainPage(){
+    private fun goToMainPage(id: Int){
+        val bundle = Bundle()
+        bundle.putInt("card_id", id)
+
+        val mainPage = MainPage()
+        mainPage.arguments = bundle
+
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.empty_layout, MainPage())
+        transaction.replace(R.id.empty_layout, mainPage)
         transaction.disallowAddToBackStack()
         transaction.commit()
     }

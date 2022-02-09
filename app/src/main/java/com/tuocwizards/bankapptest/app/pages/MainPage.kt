@@ -38,6 +38,8 @@ class MainPage : Fragment() {
         _binding = MainPageBinding.inflate(inflater, container, false)
         _binding!!.viewmodel = viewModel
 
+        viewModel.cardId = arguments?.getInt("card_id") ?: 1
+
         binding.apply {
             gbpLayout.setOnClickListener { onGBPCurrencyClicked() }
             eurLayout.setOnClickListener { onEURCurrencyClicked() }
