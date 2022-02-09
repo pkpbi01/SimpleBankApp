@@ -33,7 +33,7 @@
         android:id="@+id/selected_card"
         android:layout_width="8dp"
         android:layout_height="8dp"
-        android:background="@drawable/blue_shape"
+        android:background="@drawable/shape"
         android:orientation="horizontal"/>
 
 

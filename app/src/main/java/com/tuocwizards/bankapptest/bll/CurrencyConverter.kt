@@ -19,9 +19,6 @@ class CurrencyConverter {
     }
 
     fun roundAmount(amount: Float): String {
-//        val df = DecimalFormat("#.##")
-//        df.roundingMode = RoundingMode.HALF_EVEN
-
         return amount.toBigDecimal().setScale(2, RoundingMode.HALF_EVEN).toString()
     }
 }

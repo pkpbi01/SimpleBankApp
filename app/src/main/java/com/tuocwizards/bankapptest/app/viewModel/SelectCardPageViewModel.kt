@@ -12,6 +12,7 @@ class SelectCardPageViewModel(private val dataInteractor: DataInteractor): ViewM
 
     val selectCardAdapter = SelectCardAdapter()
     val cardList = ArrayList<SelecteCardItemModel>()
+    var currentCardId: Int = 0
     private lateinit var users: Users
 
     init {
@@ -22,13 +23,16 @@ class SelectCardPageViewModel(private val dataInteractor: DataInteractor): ViewM
     }
 
     fun fillCardslist() {
+        var userId = 0
         for (user in users.users) {
             val item = SelecteCardItemModel(
                 cardNumber = user.card_number,
+                cardId = userId,
                 iconSrc = 1
             )
             cardList.add(item)
+            userId++
         }
-        selectCardAdapter.fillList(cardList)
+        selectCardAdapter.fillList(cardList, currentCardId)
     }
 }

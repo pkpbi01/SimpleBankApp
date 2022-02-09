@@ -38,7 +38,7 @@ class MainPage : Fragment() {
         _binding = MainPageBinding.inflate(inflater, container, false)
         _binding!!.viewmodel = viewModel
 
-        viewModel.cardId = arguments?.getInt("card_id") ?: 1
+        viewModel.cardId = arguments?.getInt("card_id") ?: 0
 
         binding.apply {
             gbpLayout.setOnClickListener { onGBPCurrencyClicked() }
@@ -100,8 +100,15 @@ class MainPage : Fragment() {
     }
 
     private fun goToSelectCardPage() {
+
+        val bundle = Bundle()
+        bundle.putInt("card_id", viewModel.cardId)
+
+        val selectCardPage = SelectCardPage()
+        selectCardPage.arguments = bundle
+
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.empty_layout, SelectCardPage())
+        transaction.replace(R.id.empty_layout, selectCardPage)
         transaction.disallowAddToBackStack()
         transaction.commit()
     }

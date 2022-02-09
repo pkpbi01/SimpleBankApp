@@ -41,7 +41,7 @@ class MainPageViewModel(private val dataInteractor: DataInteractor): ViewModel()
 
     private fun fillHistory(currencyName: String) {
         history.clear()
-        val currencySymbol = findCurrencySymbol(defaultCurrency)
+        val currencySymbol = findCurrencySymbol(currencyName)
         for (item in users.users[cardId].transaction_history) {
             val price = item.amount.toFloat() * -1
             val convertedPrice = currencyConverter.convertCurrency(

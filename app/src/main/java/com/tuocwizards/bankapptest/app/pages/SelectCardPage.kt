@@ -21,6 +21,7 @@ class SelectCardPage : Fragment() {
     private var _binding: SelectCardPageBinding? = null
     private val binding get() = _binding!!
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val dataInteractor = DataInteractor()
@@ -35,10 +36,11 @@ class SelectCardPage : Fragment() {
         _binding = SelectCardPageBinding.inflate(inflater, container, false)
 
         binding.apply {
-            backButton.setOnClickListener { goToMainPage(0) }
-
+            backButton.setOnClickListener { goToMainPage(viewModel.currentCardId) }
+            viewModel.currentCardId = arguments?.getInt("card_id") ?: 0
             cardList.layoutManager = LinearLayoutManager(requireContext())
             cardList.adapter = viewModel.selectCardAdapter
+
             viewModel.selectCardAdapter.setOnItemClickListener(object : SelectCardAdapter.OnItemClickListener{
                 override fun onItemClick(position: Int) {
                     goToMainPage(position)
